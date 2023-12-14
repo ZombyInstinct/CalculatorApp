@@ -17,7 +17,7 @@ public class main{
 	private int currIndex  = 0;
 	private double result = 0.0;
 	private double value = 0.0;
-	private boolean isNewEquation = true; //check for new eq
+	private boolean setNewEquation = true; //check for new eq
 	private JButton[] numberButtons;
 	private JButton[] operationButtons;
 	private JButton[] functionButtons;
@@ -116,6 +116,14 @@ public class main{
 	{
         @Override
         public void actionPerformed(ActionEvent e) {
+			
+			if (setNewEquation)
+			{
+				currInput = "";
+				textEntry.setText(currInput);
+				setNewEquation = false;
+			}
+			
             JButton button = (JButton) e.getSource();
             currInput += button.getText();
             textEntry.setText(currInput);
@@ -127,8 +135,16 @@ public class main{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton button = (JButton) e.getSource();
-			//REDO --- perhaps full entry should by typed and decoded
+			//REDO --- perhaps full entry should by typed and decoded?
 
+			
+			if (setNewEquation)
+			{
+				currInput = "" + result;
+				textEntry.setText(currInput);
+				setNewEquation = false;
+			}
+			
 			try {
 				
 				if (checkValidEntry())
@@ -144,6 +160,7 @@ public class main{
 				{
 					result = equation.calculate();
 					textEntry.setText("= " + result);
+					setNewEquation = true;
 				}
 				
 				//equation.printList();
